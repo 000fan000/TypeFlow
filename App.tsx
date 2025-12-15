@@ -50,7 +50,7 @@ const App: React.FC = () => {
         isAutoLoading={isAutoLoading}
         onFileUpload={handleFileUpload}
       />
-      <main className="flex-1 relative h-full">
+      <main className="flex-1 h-full flex flex-col relative">
         <ContentEditableEditor 
             text={text} 
             settings={settings} 
