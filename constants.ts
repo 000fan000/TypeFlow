@@ -81,3 +81,12 @@ export const PRESETS: Preset[] = [
     }
   }
 ];
+
+export const COLOR_THEMES = [
+  { name: 'Classic', color: '#334155', backgroundColor: '#ffffff' },
+  { name: 'Dark', color: '#e2e8f0', backgroundColor: '#0f172a' },
+  { name: 'Sepia', color: '#433422', backgroundColor: '#f4ecd8' },
+  { name: 'Navy', color: '#cbd5e1', backgroundColor: '#1e293b' },
+  { name: 'Hacker', color: '#22c55e', backgroundColor: '#0f0f0f' },
+  { name: 'Slate', color: '#f8fafc', backgroundColor: '#475569' },
+];

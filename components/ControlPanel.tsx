@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Settings, Wand2, Type, Layout, Palette, ChevronLeft, ChevronRight, Upload, FileText } from 'lucide-react';
 import { StyleSettings, FontFamily } from '../types';
-import { FONT_OPTIONS, PRESETS } from '../constants';
+import { FONT_OPTIONS, PRESETS, COLOR_THEMES } from '../constants';
 
 interface ControlPanelProps {
   settings: StyleSettings;
@@ -274,6 +274,30 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
 
         {activeTab === 'color' && (
           <div className="space-y-6">
+             <div className="space-y-3">
+                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Color Themes</label>
+                <div className="grid grid-cols-3 gap-3">
+                    {COLOR_THEMES.map((theme) => (
+                        <button
+                            key={theme.name}
+                            onClick={() => onUpdateSettings({ color: theme.color, backgroundColor: theme.backgroundColor })}
+                            className="group relative flex flex-col items-center gap-1.5"
+                            title={theme.name}
+                        >
+                            <div 
+                                className="w-full h-12 rounded-lg border border-gray-200 shadow-sm flex items-center justify-center transition-transform group-hover:scale-105 group-hover:shadow-md"
+                                style={{ backgroundColor: theme.backgroundColor, color: theme.color }}
+                            >
+                                <span className="font-bold text-sm">Aa</span>
+                            </div>
+                            <span className="text-[10px] font-medium text-gray-600">{theme.name}</span>
+                        </button>
+                    ))}
+                </div>
+             </div>
+             
+             <div className="h-px bg-gray-100 my-2"></div>
+
             <div className="space-y-3">
               <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Text Color</label>
               <div className="flex gap-3 items-center">
