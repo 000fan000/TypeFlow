@@ -1,0 +1,5 @@
+{
+  "name": "TypoFlow",
+  "description": "An intelligent text styler and editor for Chinese and English content. Optimize typography automatically with Gemini or manually adjust layout settings.",
+  "requestFramePermissions": []
+}
