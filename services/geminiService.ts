@@ -25,7 +25,8 @@ export async function suggestStyles(text: string): Promise<Partial<StyleSettings
     - lineHeight: Number (1.4 to 2.2).
     - letterSpacing: Number (-1 to 3).
     - paragraphSpacing: Number (1 to 3, represents em).
-    - padding: Number (20 to 100).
+    - paddingHorizontal: Number (20 to 120).
+    - paddingVertical: Number (40 to 150).
     - fontWeight: String ("300", "400", "600", "700").
 
     Text Sample:
@@ -48,7 +49,8 @@ export async function suggestStyles(text: string): Promise<Partial<StyleSettings
             lineHeight: { type: Type.NUMBER },
             letterSpacing: { type: Type.NUMBER },
             paragraphSpacing: { type: Type.NUMBER },
-            padding: { type: Type.NUMBER },
+            paddingHorizontal: { type: Type.NUMBER },
+            paddingVertical: { type: Type.NUMBER },
             fontWeight: { type: Type.STRING },
           }
         }

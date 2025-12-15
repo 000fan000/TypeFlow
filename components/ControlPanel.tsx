@@ -240,16 +240,32 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             
              <div className="space-y-3">
               <div className="flex justify-between text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                <label>Padding</label>
-                <span>{settings.padding}px</span>
+                <label>Vertical Margin</label>
+                <span>{settings.paddingVertical}px</span>
               </div>
               <input
                 type="range"
                 min="0"
-                max="120"
+                max="200"
                 step="10"
-                value={settings.padding}
-                onChange={(e) => handleChange('padding', Number(e.target.value))}
+                value={settings.paddingVertical}
+                onChange={(e) => handleChange('paddingVertical', Number(e.target.value))}
+                className="w-full accent-indigo-600 h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+              />
+            </div>
+
+             <div className="space-y-3">
+              <div className="flex justify-between text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                <label>Horizontal Margin</label>
+                <span>{settings.paddingHorizontal}px</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="200"
+                step="10"
+                value={settings.paddingHorizontal}
+                onChange={(e) => handleChange('paddingHorizontal', Number(e.target.value))}
                 className="w-full accent-indigo-600 h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer"
               />
             </div>

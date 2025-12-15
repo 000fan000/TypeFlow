@@ -24,7 +24,8 @@ export const DEFAULT_SETTINGS: StyleSettings = {
   backgroundColor: '#ffffff',
   maxWidth: 800,
   fontWeight: '400',
-  padding: 40,
+  paddingHorizontal: 40,
+  paddingVertical: 60,
 };
 
 export const FONT_OPTIONS: FontFamily[] = [
@@ -75,6 +76,8 @@ export const PRESETS: Preset[] = [
       fontFamily: '"Fira Code", monospace',
       fontSize: 16,
       letterSpacing: 0.5,
+      paddingHorizontal: 60,
+      paddingVertical: 80,
     }
   }
 ];

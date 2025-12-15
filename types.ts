@@ -8,7 +8,8 @@ export interface StyleSettings {
   backgroundColor: string;
   maxWidth: number;
   fontWeight: string;
-  padding: number;
+  paddingHorizontal: number;
+  paddingVertical: number;
 }
 
 export interface Preset {
