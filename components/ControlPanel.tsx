@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Settings, Wand2, Type, Layout, Palette, ChevronLeft, ChevronRight, Upload, FileText } from 'lucide-react';
-import { StyleSettings, FontFamily } from '../types';
+import { Settings, Wand2, Type, Layout, Palette, ChevronLeft, ChevronRight, Upload, FileText, Download, Save } from 'lucide-react';
+import { StyleSettings, FontFamily, Preset } from '../types';
 import { FONT_OPTIONS, PRESETS, COLOR_THEMES } from '../constants';
 
 interface ControlPanelProps {
@@ -20,6 +20,8 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
 }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState<'style' | 'layout' | 'color'>('style');
+  const [customPresets, setCustomPresets] = useState<Preset[]>([]);
+  const [newThemeName, setNewThemeName] = useState('');
 
   if (collapsed) {
     return (
@@ -37,6 +39,57 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
   const handleChange = (key: keyof StyleSettings, value: string | number) => {
     onUpdateSettings({ [key]: value });
   };
+
+  const handleSaveTheme = () => {
+    if (!newThemeName.trim()) return;
+    const newPreset: Preset = {
+      name: newThemeName,
+      settings: { ...settings }
+    };
+    setCustomPresets([...customPresets, newPreset]);
+    setNewThemeName('');
+  };
+
+  const handleDownloadCSS = () => {
+    const cssContent = `/* TypoFlow Generated Theme: ${new Date().toLocaleDateString()} */
+
+body {
+  background-color: ${settings.backgroundColor};
+  color: ${settings.color};
+  font-family: ${settings.fontFamily};
+  margin: 0;
+}
+
+.typography-container {
+  max-width: ${settings.maxWidth}px;
+  margin: 0 auto;
+  padding: ${settings.paddingVertical}px ${settings.paddingHorizontal}px;
+}
+
+.typography-content {
+  font-size: ${settings.fontSize}px;
+  line-height: ${settings.lineHeight};
+  letter-spacing: ${settings.letterSpacing}px;
+  font-weight: ${settings.fontWeight};
+}
+
+.typography-content > p,
+.typography-content > div {
+  margin-bottom: ${settings.paragraphSpacing}em;
+}
+`;
+    const blob = new Blob([cssContent], { type: 'text/css' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'typoflow-theme.css';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const allPresets = [...PRESETS, ...customPresets];
 
   return (
     <div className="w-80 h-full bg-white border-r border-gray-200 flex flex-col transition-all duration-300 overflow-hidden shadow-xl z-20">
@@ -157,18 +210,48 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             
             <div className="space-y-3 pt-4 border-t border-gray-100">
                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Presets</label>
-               <div className="grid grid-cols-2 gap-2">
-                   {PRESETS.map(preset => (
+               <div className="grid grid-cols-2 gap-2 mb-4">
+                   {allPresets.map((preset, index) => (
                        <button
-                           key={preset.name}
+                           key={`${preset.name}-${index}`}
                            onClick={() => onUpdateSettings(preset.settings)}
-                           className="text-xs py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 text-left transition-colors"
+                           className="text-xs py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 text-left transition-colors truncate"
+                           title={preset.name}
                        >
                            {preset.name}
                        </button>
                    ))}
                </div>
+               
+               {/* Save New Theme Section */}
+               <div className="flex gap-2">
+                   <input 
+                      type="text" 
+                      placeholder="Theme Name" 
+                      value={newThemeName}
+                      onChange={(e) => setNewThemeName(e.target.value)}
+                      className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-xs outline-none focus:border-indigo-500"
+                   />
+                   <button 
+                      onClick={handleSaveTheme}
+                      disabled={!newThemeName.trim()}
+                      className="p-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                      title="Save Current Settings"
+                   >
+                      <Save size={16} />
+                   </button>
+               </div>
             </div>
+            
+             <div className="pt-2">
+                <button 
+                    onClick={handleDownloadCSS}
+                    className="w-full flex items-center justify-center gap-2 py-2.5 border border-gray-200 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                >
+                    <Download size={14} />
+                    Download CSS
+                </button>
+             </div>
           </div>
         )}
 
